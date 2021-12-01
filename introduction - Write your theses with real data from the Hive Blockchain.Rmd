@@ -1,0 +1,153 @@
+---
+Post title: Write your theses with real data from the Hive Blockchain!
+author: '@eroche'
+date: "01/12/2021"
+Tags: hive-dev data stats r hiveRdata blockchain crypto
+---
+
+If you are a data junkie you should be on the Blockchain. The Blockchain is one of the richest sources data around. People are putting financial transactions on it, playing games, blogging, selling digital art ...
+ 
+We haven't even scratched the surface of how the data can be used (for good and bad), but the best thing about it is its accessible to all. 
+There is no better place to be if you are a budding Data Scientist or Researcher. **Forget about the Titanic or Iris data sets.** Come to Hive and see what data is available!
+
+**Write your theses with real data from the Hive Blockchain!**
+
+
+
+![Blockchain Data.jpg](https://images.hive.blog/DQmXwH5Ti2zit9D2NAWEzXY8Dzodi37Phg8GisCBuRYrLdj/Blockchain%20Data.jpg)
+
+
+*... oh and did I mention you might even get paid for it if you give back to the blockchain!*
+
+# Tutorial Series on Blockchain Data
+This is the first in a short series of posts to shine some light for the community and any budding Crypto Analysts to the rich data resource that is the Hive Blockchain. 
+The series will use the R Programming Language. If you want to code along, I will share all the code I use but it's aimed at more advanced users and introduces ideas and concepts for getting and visualising data, but really this is only the starting point.  
+
+
+![10951.jpg](https://images.hive.blog/DQmdmftqFrWa1rGMVmbqcsve7F46AspgZaz93oAJuSdBEve/10951.jpg)
+
+
+As a long time practitioner of R I will also introduce some packages and tools along the way with a bit of history. All of the code will be available on Github.
+
+***...My language of Choice for Analysis...***
+
+
+![2560px-R_logo.svg.png](https://images.hive.blog/DQmaQZTtyRFPtovNNP8e8pwVQRaD3Hdxi9aHQzcyXsifiif/2560px-R_logo.svg.png)
+
+R is a statistical programming language that has been used for many years by Data Scientists mainly for prototyping and research. 
+In contrast production applications have historically usually favoured languages like Java or Python.
+
+I first came across R in 2006, and used it to produce some simulations for my Masters Thesis, it had a learning curve, wasnt always intuitive but once you got it you began to realise how powerful it could be if you spoke statistics. There was a package for everything and the community that had grown up around it ensured that if you wanted some bleeding edge statistical model it probably had an implementation in R. 
+
+
+The downsides were that it was buggy, inconsistent implementations, duplication, poor quality coding (not necessarily done by data scientists) and it was really slow for some calculations and didnt deal with big data very well. 
+
+It then went through a phase where many of these limitations were overcome and companies like Revolution Analytics (now part of Microsoft) began providing Enterprise flavours of R, which was far more robust and scalable.
+
+One commercial organisation has emerged (R Studio) who have really nurtured and grown symbiotically with the R language and Userbase to provide Frameworks, Development and Open Source and Free Software to the Community. Their philosophy seems to me to be that of a rising tide lifts all boats and has to have worked for them, they are led by a Chief Scientist called Hadley Wickham who has pioneered some data science techniques and visualisation techniques that are now ubiquitous. 
+
+**The story of the R language is a really is an interesting story.** 
+
+### Language of Choice for Data Science
+In 2021, Data Scientists may favour language like Python for development, features like Jupyter Notebooks have probably been one of the biggest innovations for Data Science and reproducible research, but its probably the speed and scalability of Python along with its more general use in Software Development that has pushed it ahead recently. 
+
+----
+## Hive 
+![web-g367fe7a67_1920.jpg](https://images.hive.blog/DQmYpMLAG35sBhaYUN4P732EWShRHoME4hNf3uCFAvAUxN1/web-g367fe7a67_1920.jpg)
+
+
+We have many <a href="https://developers.hive.io/t">options</a> on Hive for interacting with Blockchain Data in different coding languages, in particular Javascript, Python and Ruby which give you the tools you need to interact with the Blockchain and build Dapps and access Blockchain data. 
+
+In addition we have data services like <a href="https://docs.hivesql.io/">Hive-SQL</a> which warehouses the Blockchain Data and makes it available to the community to use in a relational database structure. 
+
+Back in the old days, there was a Blockchain called Steem which I wrote an R library and Tutorial series for and at the time I was hoping to get my R package on CRAN which is the Central Repository for Publishing R Packages. I went through the process (there is quite an extensive audit and requirement process to get published) but I have dug out the old code and updated it to work for Hive. 
+
+And with a bit more work I hope to get this package **hiveRdata** published to Cran.
+
+# Why Hive Data
+Data is the new oil, or maybe the new asbestos depending on your job title. 
+
+![ball-g39a29a777_1920.jpg](https://images.hive.blog/DQmXzubqtfGFVQrQzpUc1ApRdhjqc1nrR8kn84ryBbHJTFb/ball-g39a29a777_1920.jpg)
+
+
+* **It is undoubtedly a valuable, scarce and sensitive resource.** 
+
+The thing about public blockchains is that what goes on the blockchain stays on the blockchain. Anyone can see it. 
+Even if its encrypted you might be able to infer things form transactions. Or one day in the future the encryption may become obsolete may not longer be secure. But ignoring all that if you are just looking for some data to explore, the Blockchain is gold. 
+* Hive is richer than most (becuase people actually use it!). 
+* A lot of the data is also text based so its really rich for Data Science and particular NLP related tasks. 
+
+
+# A Gentle Introduction to Blockchain Data - Trending Posts
+To get started I am going to query the top 100 trending posts and visualise the results. 
+
+You can install the <a href="https://github.com/kharoof/hiveRdata">hiveRdata</a> package from my github. **If you do please star it!**
+
+To get the trending posts run the following command
+
+> library(hiveRdata)
+> trending <- getTrending()
+
+The getTrending() function is just a wrapper for the Hive Appbase API to access data from a public node. 
+* It returns the top 100 posts. 
+
+![image.png](https://images.hive.blog/DQmaSbJbLs1nufu7xewi1fyvKPRDTqWUWTuxRPE2HYdJRV3/image.png)
+
+I use the R Studio IDE and you can see the top 100 trending posts in tabular format. 
+
+## Visualise the Top 100 Posts
+
+How can we visualise this?
+
+Using a Visualissation package called ggplot2 the following command plots a histogram of the votes. 
+
+> library(gglot2)
+> ggplot(trending, aes(x=votes))+geom_histogram()
+
+![image.png](https://images.hive.blog/DQmebNKHtmMBcABEdNMfo1kYNbJeDCa9EmJkyLBYCTWBk2h/image.png)
+
+**Thats it. 2 lines of code in R to visualise the top 100 trending posts.** 
+* How quick and easy is that to Access Hive Blockchain Data and visualise the results?
+
+----
+
+For the rest of this series I am going to be using some advanced features of R built around Accessing Public Blockchain/ Crypto Data, and Visualising it. If you want an introduction to R you can visit my 9 part Tutorial series which I had written for Steem but and please ask if you have any questions. (links at the bottom)
+
+**If the BBC.com was publishing this Picture what would it look like?**
+
+Just to show how cutting edge this tool can be, we can style the Graph with the BBC theme. 
+
+>  ggplot(trending, aes(x=votes))+geom_histogram() + bbc_style()+ggtitle("Trending Hive Posts")
+
+![image.png](https://images.hive.blog/DQmTeKhk5WY65BZUHEMNXhT1Zgt1kbJi4ShPy4HLMf1YXBh/image.png)
+
+Thats right the BBC actually use R for publishing Content. All their Graphs are produced using R and this package. No more work for Graphic Designers at the BBC :)
+
+# Upcoming Posts
+I am planning on covering in the next few posts in this series the following topics but I am open to feedback and requests. 
+### The hiveRdata package
+A Post focusing on the hiveRdata package and the Rich Data Available directly from the Hive Blockhcain.
+### Using The Coingecko API for Crypto Market Data.
+Another Type of Blockchain Data which we will access with R is data from Coingecko, Price Data and Trading Volumes for all coins listed on Coingecko and of course Hive. ***We might even do a comparrison of Steem and Hive!*** 
+### Accessing Coinmetrics Blockchain Data
+This post will focusing in on accessing more general Blockchain Activity Data from Coinmetrics.
+### A Shiny Web App to Analyse Crypto Price Data
+The last post in this series I have planned will focus on building a Visual Analytics App for Crypto Price Data. The ease of building these webapps is one of the reasons why R is my go to language today. It brings Data to life and there are endless possibilities and extension packages from R to play with. 
+
+## Write your Thesis with Real Data
+The title of the post alludes to how you can make projects or demonstrations real with real data from the Blockchain. Forget about dull generic work with simple clean unimaginative data. If you are looking for something original use the blockchain. 
+* In the comments please share some ideas of where you can swap out standard common datasets with real world Blockchain Datasets. 
+
+# Credits
+<a href='https://www.freepik.com/vectors/winter'>Winter vector created by macrovector - www.freepik.com</a>
+
+# R 101 Series - For people begining with R
+* https://hive.blog/@eroche/introduction-to-r
+* https://hive.blog/@eroche/finding-your-way-around-r
+* https://hive.blog/@eroche/scraping-web-data-with-r
+* https://hive.blog/@eroche/data-wrangling-with-r
+* https://hive.blog/@eroche/time-series-with-r
+
+
+# Github for Code and Packages
+https://github.com/kharoof/
