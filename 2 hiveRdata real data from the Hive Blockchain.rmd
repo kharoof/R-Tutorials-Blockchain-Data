@@ -1,0 +1,155 @@
+---
+  Post title: hiveRdata real data from the Hive Blockchain!
+  author: '@eroche'
+  date: "14/12/2021"
+  Tags: hive-dev data stats r hiveRdata blockchain crypto
+---
+  
+If you are a data junkie you should be on the Blockchain. 
+
+The Blockchain is one of the richest sources data around. People are putting financial transactions on it, playing games, blogging, selling digital art ...
+
+We haven't even scratched the surface of how the data can be used (for good and bad), but the best thing about it is its accessible to all. 
+There is no better place to be if you are a budding Data Scientist or Researcher. **Forget about the Titanic or Iris data sets.** Come to Hive and see what data is available!
+
+In a previous post in this series I wrote about [Writing your Thesis with real data from the Hive Blockchain](https://hive.blog/hive-133987/@eroche/write-your-theses-with-real-data-from-the-hive-blockchain)
+
+![Blockchain Data.jpg](https://images.hive.blog/DQmXwH5Ti2zit9D2NAWEzXY8Dzodi37Phg8GisCBuRYrLdj/Blockchain%20Data.jpg)
+
+
+*... oh and did I mention you might even get paid for it if you give back to the blockchain!*
+
+# Tutorial Series on Blockchain Data
+This is the second post in a short series of posts to shine some light for the community and any budding Crypto Analysts to the rich data resource that is the Hive Blockchain. 
+The series will use the R Programming Language. If you want to code along, I will share all the code I use but it's aimed at more advanced users and introduces ideas and concepts for getting and visualising data, but really this is only the starting point.  
+
+
+![10951.jpg](https://images.hive.blog/DQmdmftqFrWa1rGMVmbqcsve7F46AspgZaz93oAJuSdBEve/10951.jpg)
+
+
+As a long time practitioner of R I will also introduce some packages and tools along the way with a bit of history. All of the code will be available on Github.
+
+
+This post covers some features of the hiveRdata package for accessing data directly from the Hive Blockhcain.
+
+# hiveRdata
+The goal of this package is to wrap some of the publicly available APIs in code so that a Data Analyst can focus on the Data Analysis rather than the Data Engineering and prep. 
+
+Common Data Access is wrapped in Functions, that are documented in the Package Help Pages, with Examples. (See Screenshot)
+
+![hiveRdata Help Pages.png](https://images.hive.blog/DQme6uaERRnHcQXLzSWMm6mfeLxKyatmABgey4vQuYmntkM/hiveRdata%20Help%20Pages.png)
+
+The Roadmap is to add functions here to the package as they are requested. 
+
+## Getting Started with hiveRdata
+This is an addon package for R. It's not on CRAN yet but I hope to get it up there in the new year, if there is interest. 
+
+You can install it directly from my github. 
+https://github.com/kharoof/hiveRdata
+
+> install.packages("devtools")
+
+> library(devtools)
+
+> install_github("kharoof/hiveRdata")
+
+
+
+## Blockchain Level Metrics
+Now that you have it downloaded and installed you can start using it. 
+For some basic metrics it can be useful to query directly. 
+
+> accountCount()
+
+This function Gets the count of the number of accounts on the Hive Blockchain and returns it to the console
+
+> getWitnesses()
+
+This function returns a list of the top 100 witnesses as a data table.
+
+![getWitnesses.png](https://images.hive.blog/DQmShEif9EuNyTdD35cmfrigBPVwLaEst9mmjJeHEvnSzqi/getWitnesses.png)
+
+-----
+## Granular Data
+Beyond the High Level Metrics about the Blockchain you can also query more granular data at the post level or at the user level. 
+
+## Post Level
+This is where you begin to process lots of data so these queries may take some time. To start with I will give an example of looking at the data in the Top Trending Posts. 
+
+> getTrending()
+
+This returns the top 100 posts from the trending page with all the important data. The Text, Title, Tags ...
+
+
+![getTrending.png](https://images.hive.blog/DQmbydKxzmVVMFqmiojU7oNzADEZRx4PFBUf5HN55Kh4UF6/getTrending.png)
+
+Now any Data Analyst has at thier fingertips all the Text from all the Posts on the Trending Page. 
+
+![AI.jpg](https://images.hive.blog/DQme6ZNpwffvMgjSJMTu5DBr8F6X47W1R1hfn2UQ784Hg3E/AI.jpg)
+
+As a Data Analyst or Scientist this is where it gets really exciting. at Your fingertip is real world data directly from teh Blockchain. Build Models, Visualisations, Dig in. 
+
+**There are no limits to the possibilities.** 
+
+*We are beginning to see the potential. But there is more ...*
+
+## Account Level
+**What if you want to get details for a particular account?**
+
+> getAccount("eroche")
+
+Drill down to the user account @eroche
+
+![getAccounts.png](https://images.hive.blog/DQmQjbykjDnCP5yp2vpijZSxApjv6T2UPavxsNABwpEknoG/getAccounts.png)
+
+* When you have identified an account and want to pull out some metrics about the user. How many posts? How many comments?
+
+## User Post Level
+You may also wish to drill down to find a users posts. 
+
+I am going to use @culturevulture for this example
+
+> getBlogPosts("culturevulture")
+
+![getBlogPosts.png](https://images.hive.blog/DQmVZjJ7RXbXrVGpLLiRb1UfZpXACVcBXcM1Aba4vGab9Qp/getBlogPosts.png)
+* This example shows data in the same structure as getTrending() but for a specific user. 
+
+## Next Steps
+This package is a tool, it provides **building blocks** so that Analysts or Data Scientists can build data pipelines for their use cases with data from the Hive Blockchain. It's early days and I will be adding most features. For large scale Data Crunching I would suggest you use another dapp from Hive such as @hivesql but for ad hoc analysis, or prototyping this might tool may be useful. It also does not depend on any service provider, you can specify the node, which you could be running yourself. 
+
+This is valuable if you want to remove dependencies from your analytics pipeline or access data from different sources. 
+
+# Upcoming Posts
+I am planning on covering in the next few posts in this series the following topics but I am open to feedback and requests. 
+### Using The Coingecko API for Crypto Market Data.
+Another Type of Blockchain Data which we will access with R is data from Coingecko, Price Data and Trading Volumes for all coins listed on Coingecko and of course Hive. ***We might even do a comparrison of Steem and Hive!*** 
+### Accessing Coinmetrics Blockchain Data
+This post will focusing in on accessing more general Blockchain Activity Data from Coinmetrics.
+### A Shiny Web App to Analyse Crypto Price Data
+The last post in this series I have planned will focus on building a Visual Analytics App for Crypto Price Data. The ease of building these webapps is one of the reasons why R is my go to language today. It brings Data to life and there are endless possibilities and extension packages from R to play with. 
+
+# Previous Posts
+## Write your Thesis with Real Data
+The title of the post alludes to how you can make projects or demonstrations real with real data from the Blockchain. Forget about dull generic work with simple clean unimaginative data. If you are looking for something original use the blockchain. 
+https://hive.blog/hive-133987/@eroche/write-your-theses-with-real-data-from-the-hive-blockchain
+
+**In the comments please share some ideas of where you can swap out standard common datasets with real world Blockchain Datasets.** 
+
+# R 101 Series - For people beginning with R
+This series from some time back is useful for people beginning their R journey. 
+* https://hive.blog/@eroche/introduction-to-r
+* https://hive.blog/@eroche/finding-your-way-around-r
+* https://hive.blog/@eroche/scraping-web-data-with-r
+* https://hive.blog/@eroche/data-wrangling-with-r
+* https://hive.blog/@eroche/time-series-with-r
+
+
+# Github for Code and Packages
+**Please give me a Star on Github if you liked this post.**
+https://github.com/kharoof/
+
+
+
+# Credits
+<a href='https://www.freepik.com/vectors/background'>Background vector created by starline - www.freepik.com</a>
+<a href='https://www.freepik.com/vectors/winter'>Winter vector created by macrovector - www.freepik.com</a>
